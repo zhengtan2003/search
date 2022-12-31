@@ -1,20 +1,7 @@
 const path = require('path')
 const {BannerPlugin} = require('webpack')
-const TerserPlugin = require('terser-webpack-plugin')
 
-module.exports = {
-	mode: 'production',
-	entry: './src/index.ts',
-	resolve: {
-		extensions: ['.ts', '.js'],
-	},
-	output: {
-		path: path.resolve(__dirname, 'dist'),
-	},
-	plugins: [
-		new BannerPlugin({
-			raw: true,
-			banner: () => `
+const banner = `
 // ==UserScript==
 // @name         Search Enhance
 // @namespace    http://tampermonkey.net/
@@ -24,24 +11,26 @@ module.exports = {
 // @match        *://*.baidu.com/*
 // @grant        none
 // ==/UserScript==
-			`,
+`
+
+module.exports = {
+	mode: 'production',
+	entry: './src/index.ts',
+	resolve: {
+		extensions: ['.ts', '.js'],
+	},
+	output: {
+		filename: 'index.js',
+		path: path.resolve(__dirname, 'dist'),
+	},
+	plugins: [
+		new BannerPlugin({
+			banner,
+			raw: true,
 			entryOnly: true,
 		}),
 	],
 	optimization: {
 		minimize: false,
-		// minimizer: [
-		// 	new TerserPlugin({
-		// 		terserOptions:{
-		// 			output: {
-		// 				comments: false // 此配置最重要，无此配置无法删除声明注释
-		// 			},
-		// 			format: {
-		// 				comments: false,
-		// 			},
-		// 		},
-		// 		extractComments: false,
-		// 	}),
-		// ],
 	},
 }
