@@ -1,8 +1,13 @@
 {
   "name": "search-enhance",
+  "version": "1.0.0",
   "scripts": {
     "build": "webpack --config ./webpack.config.js"
   },
+  "description": "搜索引擎增强",
+  "authors": [
+    "zhengtan2003"
+  ],
   "devDependencies": {
     "terser-webpack-plugin": "^5.3.6",
     "ts-node": "^10.9.1",
