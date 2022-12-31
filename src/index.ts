@@ -1,5 +1,5 @@
-import baidu from './baidu'
+import baidu from "./baidu";
 
 (()=>{
-    baidu()
+    baidu();
 })()

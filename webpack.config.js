@@ -3,12 +3,14 @@ const {BannerPlugin} = require('webpack')
 
 const banner = `
 // ==UserScript==
-// @name         Search Enhance
-// @namespace    http://tampermonkey.net/
-// @version      0.1
-// @description  搜索引擎增强
-// @author       You
+// @name         搜索引擎增强
+// @namespace    search-enhance
+// @version      1.0.0
+// @description:zh-cn  搜索引擎增强、百度搜索广告去除
+// @author       zhengtan2003
 // @match        *://*.baidu.com/*
+// @match        *://*.bing.com/*
+// @license      MIT
 // @grant        none
 // ==/UserScript==
 `
