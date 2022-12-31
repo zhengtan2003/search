@@ -4,12 +4,12 @@ const {BannerPlugin} = require('webpack')
 const banner = `
 // ==UserScript==
 // @name         搜索引擎增强
-// @namespace    search-enhance
+// @namespace    https://github.com/zhengtan2003/search-enhance
 // @version      1.0.0
 // @description:zh-cn  搜索引擎增强、百度搜索广告去除
 // @author       zhengtan2003
 // @match        *://*.baidu.com/*
-// @match        *://*.bing.com/*
+// @match        *://*.google.com/*
 // @license      MIT
 // @grant        none
 // ==/UserScript==
@@ -18,8 +18,17 @@ const banner = `
 module.exports = {
 	mode: 'production',
 	entry: './src/index.ts',
+	module: {
+		rules: [
+			{
+				test: /\.(ts|tsx)$/,
+				exclude: /node_modules/,
+				use: ['ts-loader'],
+			},
+		],
+	},
 	resolve: {
-		extensions: ['.ts', '.js'],
+		extensions: ['.ts', '.tsx', '.js', '.jsx'],
 	},
 	output: {
 		filename: 'index.js',

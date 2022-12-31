@@ -10,6 +10,7 @@ const killAD = () => {
     document.querySelectorAll('.ec_wise_ad')?.forEach((item) => item.remove());
 }
 const baidu = () => {
+    if (!location.host.includes('baidu')) return
     killAD()
     const observer = new MutationObserver(killAD);
     observer.observe(document.body, {
