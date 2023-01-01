@@ -2,34 +2,40 @@ import {createRoot} from 'react-dom/client';
 import {FloatButton} from 'antd'
 
 const App = () => {
-    const toGoogle = () => {
-        const keyword = (document.querySelector('input[name="wd"]') as HTMLInputElement)?.value;
-        window.open(`//www.google.com/search?q=${keyword}`, "_blank");
+    const {host} = location;
+    const openInTab = (url) => {
+        let keyword = ""
+        if (host.includes('baidu.com')) {
+            keyword = (document.querySelector('input[name="wd"]') as HTMLInputElement)?.value ?? (document.querySelector('input[name="word"]') as HTMLInputElement)?.value
+        } else if (location.host.includes('google')) {
+            keyword = (document.querySelector('input[name="q"]') as HTMLInputElement)?.value
+        }
+        // @ts-ignore
+        GM_openInTab(`${url}${keyword}`, {active: true});
     }
-    const toBaidu = () => {
-        const keyword = (document.querySelector('input[name="q"]') as HTMLInputElement)?.value;
-        window.open(`//www.baidu.com/s?wd=${keyword}`, "_blank")
+    const getIcon = (src) => {
+        const num = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+        return (
+            <img alt={src}
+                 width={18}
+                 height={18}
+                 src={`//t${num}.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://${src}?client=SOCIAL&size=64`}/>
+        )
     }
     return (
         <FloatButton.Group shape="circle" style={{left: 24}}>
             {
                 !location.host.includes('google') && (
-                    <FloatButton onClick={toGoogle}
+                    <FloatButton onClick={() => openInTab("//www.google.com/search?q=")}
                                  tooltip={"跳转到google"}
-                                 icon={
-                                     <img alt={"google"}
-                                          src={`//t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://google.com&size=18`}/>
-                                 }/>
+                                 icon={getIcon("google.com")}/>
                 )
             }
             {
                 !location.host.includes('baidu') && (
-                    <FloatButton onClick={toBaidu}
+                    <FloatButton onClick={() => openInTab("//www.baidu.com/s?wd=")}
                                  tooltip={"跳转到baidu"}
-                                 icon={
-                                     <img alt="baidu"
-                                          src={`//www.google.com/s2/favicons?sz=18&domain=baidu.com`}/>
-                                 }/>
+                                 icon={getIcon("baidu.com")}/>
                 )
             }
             <FloatButton.BackTop visibilityHeight={0}/>
